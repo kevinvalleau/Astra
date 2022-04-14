@@ -1,0 +1,17 @@
+version: "3.7"
+
+services:
+  astra:
+    build: .
+    links:
+      - mongo
+    ports:
+      - "8094:8094"
+    network_mode: "host"
+
+  mongo:
+    image: mongo
+    ports:
+      - 27018:27018
+    network_mode: "host"
+    command: mongod --port 27018

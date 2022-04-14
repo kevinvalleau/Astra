@@ -43,7 +43,7 @@ def parse_collection(collection_name,collection_type):
     if collection_type == 'Postman':
         parse_data.postman_parser(collection_name)
     else:
-        print "[-]Failed to Parse collection"
+        print("[-]Failed to Parse collection")
         sys.exit(1)
 
 def scan_postman_collection(file_name,scanid,new_url=None):
@@ -84,7 +84,7 @@ def scan_postman_collection(file_name,scanid,new_url=None):
 
 
 def scan_complete():
-    print "[+]Scan has been completed"
+    print("[+]Scan has been completed")
     webbrowser.open("http://127.0.0.1:8094/reports.html#"+scanid)
     while True:
         pass
@@ -127,7 +127,7 @@ def read_scan_policy():
         attack = ast.literal_eval(scan_policy)
 
     except Exception as e:
-        print e
+        print(e)
 
     return attack
 
@@ -144,7 +144,7 @@ def modules_scan(url,method,headers,body,scanid=None):
     '''Scanning API using different engines '''
     attack = read_scan_policy()
     if attack is None:
-        print "Failed to start scan."
+        print("Failed to start scan.")
         sys.exit(1)
 
     if scanid is None:
@@ -205,7 +205,7 @@ def handleException(method, module_name):
         #raise Exception("handle exception")
         method()
     except Exception:
-        print "exception in", module_name
+        print("exception in", module_name)
 
 def validate_data(url,method):
     ''' Validate HTTP request data and return boolean value'''
@@ -239,7 +239,7 @@ def scan_single_api(url, method, headers, body, api, scanid=None):
 
     result = validate_data(url, method)
     if result is False:
-        print "[-]Invalid Arguments"
+        print("[-]Invalid Arguments")
         return False
 
     if api == "Y":
@@ -277,7 +277,7 @@ def scan_core(collection_type,collection_name,url,headers,method,body,loginurl,l
             modules_scan(url,method,headers,body,scanid)      
 
     else:
-        print "%s [-]Invalid Collection. Please recheck collection Type/Name %s" %(api_logger.G, api_logger.W)
+        print("%s [-]Invalid Collection. Please recheck collection Type/Name %s" %(api_logger.G, api_logger.W))
 
 def get_arg(args=None):
         parser = argparse.ArgumentParser(description='Astra - REST API Security testing Framework')
@@ -305,7 +305,7 @@ def get_arg(args=None):
 
         results = parser.parse_args(args)
         if len(args) == 0:
-            print "%sAt least one argument is needed to procced.\nFor further information check help: %spython astra.py --help%s"% (api_logger.R, api_logger.G, api_logger.W)
+            print("%sAt least one argument is needed to procced.\nFor further information check help: %spython astra.py --help%s"% (api_logger.R, api_logger.G, api_logger.W))
             sys.exit(1)
 
         return (results.collection_type,
@@ -333,7 +333,7 @@ def main():
         try:
             loginurl,lognheaders,loginmethod,logidata = api_login.parse_logindata(loginurl)
         except:
-           print "[-]%s Failed to detect login API from collection %s " %(api_logger.R, api_logger.W)
+           print("[-]%s Failed to detect login API from collection %s " %(api_logger.R, api_logger.W))
            sys.exit(1)
         api_login.fetch_logintoken(loginurl,loginmethod,loginheaders,logindata)
         login_require = False

@@ -6,10 +6,10 @@ from pymongo.errors import ServerSelectionTimeoutError
 
 # Mongo DB connection
 def db_connect():
-    maxSevSelDelay = 1
+    maxSevSelDelay = 3000
     try:
         mongo_host = 'localhost'
-        mongo_port = 27017
+        mongo_port = 27018
 
         if 'MONGO_PORT_27017_TCP_ADDR' in os.environ :
             mongo_host = os.environ['MONGO_PORT_27017_TCP_ADDR']
@@ -22,4 +22,4 @@ def db_connect():
         return client
 
     except ServerSelectionTimeoutError as err:
-        exit("Failed to connect to MongoDB.")
+        exit("db_connect - Failed to connect to MongoDB.")
