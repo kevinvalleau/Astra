@@ -28,7 +28,10 @@ Hello!\
 class xxe_scan:
     def __init__(self):
         self.port = 1111
-        self.host = socket.gethostbyname(socket.gethostname())
+        print('xxe_scan - hostname {0}'.format(socket.gethostname()))
+        print('xxe_scan - host by name {0}'.format(socket.gethostbyname('')))
+        self.host = socket.gethostbyname('')
+        #self.host = socket.gethostbyname(socket.gethostname())
 
     def generate_hash(self):
         return hashlib.md5(str(time.time())).hexdigest()
@@ -59,7 +62,7 @@ class xxe_scan:
             self.conn.close()
 
         except socket.error:
-            print "[-]URL might not be vulnerable to XXE. We reccomend you to check it manually"
+            print("[-]URL might not be vulnerable to XXE. We reccomend you to check it manually")
             self.conn.close()
 
     def fetch_xxe_payload(self):
@@ -92,7 +95,7 @@ class xxe_scan:
             xxe_request = requests.post(url, headers=temp_headers, data=payload)
             time.sleep(10)
             if vulnerable is True:
-                print "[+]{0} is vulnerable to XML External Entity Attack".format(url)
+                print("[+]{0} is vulnerable to XML External Entity Attack".format(url))
                 attack_result = { "id" : 14, "scanid" : scanid, "url" : url, "alert": "XML External Entity Attack", "impact": "High", "req_headers": temp_headers, "req_body":payload, "res_headers": xxe_request.headers ,"res_body": xxe_request.text}
                 dbupdate.insert_record(attack_result)
                 break

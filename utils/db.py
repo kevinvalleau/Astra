@@ -6,9 +6,9 @@ class Database_update:
 	def __init__(self):
 		# Mongo DB connection
 		mongo_host = 'localhost'
-		mongo_port = 27017
+		mongo_port = 27018
 		
-		maxSevSelDelay = 1
+		maxSevSelDelay = 3000
 
 		if 'MONGO_PORT_27017_TCP_ADDR' in os.environ :
 			mongo_host = os.environ['MONGO_PORT_27017_TCP_ADDR']
@@ -24,7 +24,7 @@ class Database_update:
 		if records:
 			for data in records:
 				data.pop('_id')
-				print data
+				print(data)
 
 	def insert_record(self,data):
 		try:

@@ -67,7 +67,7 @@ def csrf_attack_body(url,method,headers,body,csrf_param,scanid):
 					impact = "High"
 					headers = tmp_headers
 				
-				print "%s[-]{0} is vulnerable to CSRF attack%s".format(url)% (api_logger.R, api_logger.W)
+				print("%s[-]{0} is vulnerable to CSRF attack%s".format(url)% (api_logger.R, api_logger.W))
 				attack_result = { "id" : 6, "scanid" : scanid, "url" : url, "alert" : "CSRF", "impact" : impact, "req_headers": headers, "req_body":body, "res_headers": json_csrf.headers, "res_body" : json_csrf.text}
 				dbupdate.insert_record(attack_result)
 
@@ -86,7 +86,7 @@ def csrf_attack_header(url,method,headers,body,csrf_header,csrf_test_type,scanid
 
 		if csrf_req.status_code == http_status_code:
 			if len(csrf_req.text) == response_size:
-				print "%s[-]{0} is vulnerable to CSRF attack%s".format(url)% (api_logger.R, api_logger.W)
+				print("%s[-]{0} is vulnerable to CSRF attack%s".format(url)% (api_logger.R, api_logger.W))
 				attack_result = { "id" : 6, "scanid" : scanid, "url" : url, "alert": "CSRF", "impact": "High", "req_headers": headers, "res_headers": csrf_req.headers,"res_body": csrf_req.text}
 				dbupdate.insert_record(attack_result)
 				return
@@ -105,7 +105,7 @@ def csrf_attack_header(url,method,headers,body,csrf_header,csrf_test_type,scanid
 					# Check for CORS 
 					result = check_custom_header(url, csrf_header) 
 					if result == True:
-						print "%s[-]{0} is vulnerable to CSRF attack%s".format(url)% (api_logger.R, api_logger.W)
+						print("%s[-]{0} is vulnerable to CSRF attack%s".format(url)% (api_logger.R, api_logger.W))
 						attack_result = { "id" : 6, "scanid" : scanid, "url" : url, "alert": "CSRF", "impact": "High", "req_headers": headers, "req_body":body, "res_headers": csrf_req.headers,"res_body": csrf_req.text}
 						dbupdate.insert_record(attack_result)
 
